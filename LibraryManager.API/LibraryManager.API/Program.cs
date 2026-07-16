@@ -1,4 +1,14 @@
+using LibraryManager.API.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Injeção de Dependência do DbContext para o SQL Server
+builder.Services.AddDbContext<LibraryDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // Add services to the container.
 
