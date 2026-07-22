@@ -63,7 +63,7 @@ namespace LibraryManager.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ISNB = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AnoPublicacao = table.Column<int>(type: "int", nullable: true),
                     CapaUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QuantidadeTotal = table.Column<int>(type: "int", nullable: false),

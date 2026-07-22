@@ -117,7 +117,7 @@ namespace LibraryManager.API.Migrations
                     b.Property<int?>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ISNB")
+                    b.Property<string>("ISBN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -171,7 +171,7 @@ namespace LibraryManager.API.Migrations
             modelBuilder.Entity("LibraryManager.API.Entities.Emprestimo", b =>
                 {
                     b.HasOne("LibraryManager.API.Entities.Livro", "Livro")
-                        .WithMany()
+                        .WithMany("Emprestimos")
                         .HasForeignKey("LivroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -189,13 +189,17 @@ namespace LibraryManager.API.Migrations
 
             modelBuilder.Entity("LibraryManager.API.Entities.Livro", b =>
                 {
-                    b.HasOne("LibraryManager.API.Entities.Autor", null)
+                    b.HasOne("LibraryManager.API.Entities.Autor", "Autor")
                         .WithMany("Livros")
                         .HasForeignKey("AutorId");
 
-                    b.HasOne("LibraryManager.API.Entities.Categoria", null)
+                    b.HasOne("LibraryManager.API.Entities.Categoria", "Categoria")
                         .WithMany("Livros")
                         .HasForeignKey("CategoriaId");
+
+                    b.Navigation("Autor");
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("LibraryManager.API.Entities.Autor", b =>
@@ -206,6 +210,11 @@ namespace LibraryManager.API.Migrations
             modelBuilder.Entity("LibraryManager.API.Entities.Categoria", b =>
                 {
                     b.Navigation("Livros");
+                });
+
+            modelBuilder.Entity("LibraryManager.API.Entities.Livro", b =>
+                {
+                    b.Navigation("Emprestimos");
                 });
 
             modelBuilder.Entity("LibraryManager.API.Entities.Usuario", b =>
