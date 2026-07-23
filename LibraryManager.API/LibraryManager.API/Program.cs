@@ -19,6 +19,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<ILivroService, LivroService>();
+builder.Services.AddHttpClient<IOpenLibraryService, OpenLibraryService>(client =>
+{
+    client.BaseAddress = new Uri("https://openlibrary.org/");
+});
 
 var app = builder.Build();
 
