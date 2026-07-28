@@ -1,7 +1,9 @@
-﻿namespace LibraryManager.API.Interfaces
+﻿using LibraryManager.API.DTOs.OpenLibrary;
+
+namespace LibraryManager.API.Interfaces
 {
     public interface IOpenLibraryService
     {
-        Task<string?> BuscarLivroPorIsbnAsync(string isbn);
+        Task<OpenLibrarySearchDocument?> BuscarLivroPorIsbnAsync(string isbn);
     }
 }

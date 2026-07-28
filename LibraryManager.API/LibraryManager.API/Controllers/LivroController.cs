@@ -9,16 +9,21 @@ namespace LibraryManager.API.Controllers
     public class LivroController : ControllerBase
     {
         private readonly ILivroService _service;
+        private readonly IOpenLibraryService _openLibraryService;
 
-        public LivroController(ILivroService service)
+        public LivroController(
+            ILivroService service,
+            IOpenLibraryService openLibraryService)
         {
             _service = service;
+            _openLibraryService = openLibraryService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var livros = await _service.GetAllAsync();
+
             return Ok(livros);
         }
 
@@ -33,6 +38,21 @@ namespace LibraryManager.API.Controllers
             return Ok(livro);
         }
 
+        [HttpGet("buscar-isbn/{isbn}")]
+        public async Task<IActionResult> BuscarPorIsbn(string isbn)
+        {
+            var resultado =
+                await _openLibraryService.BuscarLivroPorIsbnAsync(isbn);
+
+            if (resultado == null)
+            {
+                return NotFound(
+                    "Livro não encontrado na Open Library.");
+            }
+
+            return Ok(resultado);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(LivroRequest request)
         {
@@ -42,7 +62,9 @@ namespace LibraryManager.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, LivroRequest request)
+        public async Task<IActionResult> Update(
+            int id,
+            LivroRequest request)
         {
             await _service.UpdateAsync(id, request);
 

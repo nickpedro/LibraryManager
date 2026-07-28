@@ -1,4 +1,6 @@
-﻿using LibraryManager.API.Interfaces;
+﻿using System.Net.Http.Json;
+using LibraryManager.API.DTOs.OpenLibrary;
+using LibraryManager.API.Interfaces;
 
 namespace LibraryManager.API.Services
 {
@@ -10,17 +12,23 @@ namespace LibraryManager.API.Services
         {
             _httpClient = httpClient;
         }
-        // Implementação do método BuscarLivroPorIsbnAsync
-        public async Task<string?> BuscarLivroPorIsbnAsync(string isbn)
+
+        public async Task<OpenLibrarySearchDocument?> BuscarLivroPorIsbnAsync(string isbn)
         {
-            var url = $"isbn/{isbn}.json";
+            var url = $"search.json?isbn={isbn}";
 
             var response = await _httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
                 return null;
 
-            return await response.Content.ReadAsStringAsync();
+            var resultado =
+                await response.Content.ReadFromJsonAsync<OpenLibrarySearchResponse>();
+
+            if (resultado == null || resultado.Docs.Count == 0)
+                return null;
+
+            return resultado.Docs.FirstOrDefault();
         }
     }
 }
