@@ -10,6 +10,8 @@ namespace LibraryManager.API.Interfaces
 
         Task AddAsync(LivroRequest request);
 
+        Task<LivroResponse> AddByIsbnAsync(LivroIsbnRequest request);
+
         Task UpdateAsync(int id, LivroRequest request);
 
         Task DeleteAsync(int id);

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using LibraryManager.API.DTOs;
 using LibraryManager.API.DTOs.OpenLibrary;
 using LibraryManager.API.Interfaces;
 
@@ -13,7 +14,7 @@ namespace LibraryManager.API.Services
             _httpClient = httpClient;
         }
 
-        public async Task<OpenLibrarySearchDocument?> BuscarLivroPorIsbnAsync(string isbn)
+        public async Task<LivroOpenLibraryResponse?> BuscarLivroPorIsbnAsync(string isbn)
         {
             var url = $"search.json?isbn={isbn}";
 
@@ -28,7 +29,23 @@ namespace LibraryManager.API.Services
             if (resultado == null || resultado.Docs.Count == 0)
                 return null;
 
-            return resultado.Docs.FirstOrDefault();
+            var livroEncontrado = resultado.Docs.First();
+
+            return new LivroOpenLibraryResponse
+            {
+                Titulo = livroEncontrado.Title ?? string.Empty,
+
+                Autor = livroEncontrado.AuthorName?.FirstOrDefault()
+                        ?? "Autor desconhecido",
+
+                ISBN = isbn,
+
+                AnoPublicacao = livroEncontrado.FirstPublishYear,
+
+                CapaUrl = livroEncontrado.CoverId.HasValue
+                    ? $"https://covers.openlibrary.org/b/id/{livroEncontrado.CoverId}-L.jpg"
+                    : null
+            };
         }
     }
 }

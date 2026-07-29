@@ -53,6 +53,18 @@ namespace LibraryManager.API.Controllers
             return Ok(resultado);
         }
 
+        // Busca os dados na Open Library e cadastra o livro no banco.
+        [HttpPost("cadastrar-isbn")]
+        public async Task<IActionResult> CadastrarPorIsbn(LivroIsbnRequest request)
+        {
+            var livro = await _service.AddByIsbnAsync(request);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = livro.Id },
+                livro);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(LivroRequest request)
         {
