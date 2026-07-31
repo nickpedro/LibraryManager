@@ -5,6 +5,7 @@ using LibraryManager.API.Interfaces;
 
 namespace LibraryManager.API.Services
 {
+    // Serviço que interage com a API Open Library para buscar informações de livros.
     public class OpenLibraryService : IOpenLibraryService
     {
         private readonly HttpClient _httpClient;

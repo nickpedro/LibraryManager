@@ -52,5 +52,11 @@ namespace LibraryManager.API.Repositories
             _context.Livros.Remove(livro);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Livro?> GetByIsbnAsync(string isbn)
+        {
+            return await _context.Livros
+                .FirstOrDefaultAsync(l => l.ISBN == isbn);
+        }
     }
 }

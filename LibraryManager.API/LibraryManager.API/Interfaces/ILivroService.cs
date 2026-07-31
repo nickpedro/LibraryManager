@@ -1,19 +1,18 @@
 ﻿using LibraryManager.API.DTOs;
 
-namespace LibraryManager.API.Interfaces
+namespace LibraryManager.API.Interfaces;
+
+public interface ILivroService
 {
-    public interface ILivroService
-    {
-        Task<IEnumerable<LivroResponse>> GetAllAsync();
+    Task<IEnumerable<LivroResponse>> GetAllAsync();
 
-        Task<LivroResponse?> GetByIdAsync(int id);
+    Task<LivroResponse?> GetByIdAsync(int id);
 
-        Task AddAsync(LivroRequest request);
+    Task AddAsync(LivroRequest request);
 
-        Task<LivroResponse> AddByIsbnAsync(LivroIsbnRequest request);
+    Task<LivroResponse> AddByIsbnAsync(LivroIsbnRequest request);
 
-        Task UpdateAsync(int id, LivroRequest request);
+    Task UpdateAsync(int id, LivroRequest request);
 
-        Task DeleteAsync(int id);
-    }
+    Task DeleteAsync(int id);
 }

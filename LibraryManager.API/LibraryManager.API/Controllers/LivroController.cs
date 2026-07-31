@@ -1,5 +1,6 @@
 ﻿using LibraryManager.API.DTOs;
 using LibraryManager.API.Interfaces;
+using LibraryManager.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManager.API.Controllers
@@ -8,11 +9,11 @@ namespace LibraryManager.API.Controllers
     [Route("api/[controller]")]
     public class LivroController : ControllerBase
     {
-        private readonly ILivroService _service;
+        private readonly LivroService _service;
         private readonly IOpenLibraryService _openLibraryService;
 
         public LivroController(
-            ILivroService service,
+            LivroService service,
             IOpenLibraryService openLibraryService)
         {
             _service = service;

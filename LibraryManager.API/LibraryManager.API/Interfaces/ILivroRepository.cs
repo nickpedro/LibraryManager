@@ -14,5 +14,6 @@ namespace LibraryManager.API.Interfaces
         Task UpdateAsync(Livro livro);
 
         Task DeleteAsync(int id);
+        Task<Livro?> GetByIsbnAsync(string isbn);
     }
 }
