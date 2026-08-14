@@ -17,8 +17,13 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<ILivroService, LivroService>();
+
+builder.Services.AddScoped<IAutorRepository, AutorRepository>();
+builder.Services.AddScoped<IAutorService, AutorService>();
+
 builder.Services.AddHttpClient<IOpenLibraryService, OpenLibraryService>(client =>
 {
     client.BaseAddress = new Uri("https://openlibrary.org/");
